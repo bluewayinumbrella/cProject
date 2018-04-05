@@ -1,21 +1,26 @@
 #-*- coding: utf-8 -*-
+
 import requests
 import sys
+import json
+
 from bs4 import BeautifulSoup
 from abc import *
+
 
 from common import *
 # logError(blabla)
 # filterList(list, filter)
+# isNetworkAlive(addr, maxSec=5)
 
 
 
-Class AppStore(metaclass = ABCMeta):
+class AppStore:#(metaclass = ABCMeta):
 # this is parents class for each AppStore
 # Almost Abstract Class
 
-    bingSearch="https://www.bing.com/search?" +
-    "q=site%3A{0}&qs=n&form=QBRE&sp=-1&pq=site%3Ahttp%3A{0}&sc=0-44&sk=" +
+    bingSearch= "https://www.bing.com/search?" + \
+    "q=site%3A{0}&qs=n&form=QBRE&sp=-1&pq=site%3Ahttp%3A{0}&sc=0-44&sk=" + \
     "&cvid=886DD08E942B465DABA288E16D94F7A5&first={1}&FORM=PERE"
     # bing advanced search url (site:parentUrl oneMoreKeyword)
     
@@ -24,23 +29,29 @@ Class AppStore(metaclass = ABCMeta):
         # Concatation of site and keyword must compose url of app detail page
         # return the each app detail page
 
-        maxPage = 90
+        maxPage = 10 ### it could be 90 
         urlList = []
         urlFilteredList = []
 
-        for idx in range(0, maxPage)
-            req = requests.get(bingSearch.format(site + "+" + keyword, 10*idx + 1))
+        for idx in range(0, maxPage):
+            try:
+                req = requests.get(AppStore.bingSearch.format(site + "+" + keyword, 10*idx + 1))
+            except:
+                continue
             html = req.text
             soup = BeautifulSoup(html, 'html.parser')
-            marketPages = (
+
+            marketPages = soup.select(
             '#b_results > li > div.b_algoheader > a'
             )
             for page in marketPages:
-                urlList += url['href']
+                urlList.append(page['href'])
             
         
         urlFilteredList = filterList(urlList, site + keyword)
-                    
+        for url in urlFilteredList:
+            print("link :"+ url)
+        return urlFilteredList           
             
 
 
@@ -70,7 +81,7 @@ Class AppStore(metaclass = ABCMeta):
 
     
 
-Class Tensent(AppStore):
+class Tensent(AppStore):
 
     def searchInMarket(self, keyword):
         # search some keyword in each searchInMarket
@@ -96,8 +107,8 @@ Class Tensent(AppStore):
         pass
 
 
-Class Shaomi(AppStore):
+class Shaomi(AppStore):
+    pass
 
-
-Class Mobile365(AppStore):
-
+class Mobile365(AppStore):
+    pass

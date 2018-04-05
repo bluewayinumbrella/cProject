@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import sys
 
 def logError(msg):
@@ -8,8 +9,8 @@ def filterList(strList, conditionWord):
 
     filteredList = []
     for string in strList:
-        if string.find(filterWord) != -1:
-            filteredList += string
+        if string.find(conditionWord) != -1:
+            filteredList.append(string)
         else:
             pass
 
@@ -22,7 +23,7 @@ def isNetworkAlive(addr, maxSec=5):
         requests.get(url=addr, timeout=maxSec)
         return True
     except:
-        logError('Network state is abnormal!' +
+        logError('Network state is abnormal!' + \
         'Check market server("{0}") and local network state.'.format(addr))
         return False
 
