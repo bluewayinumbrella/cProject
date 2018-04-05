@@ -48,7 +48,7 @@ class AppStore:#(metaclass = ABCMeta):
                 urlList.append(page['href'])
             
         
-        urlFilteredList = filterList(urlList, site + keyword)
+        urlFilteredList = whiteFilterList(urlList, site + keyword)
         for url in urlFilteredList:
             print("link :"+ url)
         return urlFilteredList           

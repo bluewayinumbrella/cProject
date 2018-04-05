@@ -4,17 +4,31 @@ import sys
 def logError(msg):
     sys.stderr.write(msg+"\n")
 
-def filterList(strList, conditionWord):
-    # Make list in which all element contains conditionWord
+def whiteFilterList(strList, whiteKeyword):
+    # Make list in which all element contains keyword
 
     filteredList = []
     for string in strList:
-        if string.find(conditionWord) != -1:
+        if string.find(whiteKeyword) != -1:
             filteredList.append(string)
         else:
             pass
 
     return filteredList
+
+def blackFilterList(strList, blackKeyWord):
+    # Make List in which all element doesn't contain keyword
+
+    filteredList = []
+    for string in strList:
+        if string.find(blackKeyword) == -1:
+            filteredList.append(string)
+        else:
+            pass
+
+    return filteredList
+
+
 
 def isNetworkAlive(addr, maxSec=5):
     # try connect with timeout argument
