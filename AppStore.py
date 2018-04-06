@@ -107,7 +107,7 @@ class Tensent(AppStore):
         pass
 
 
-class Shaomi(AppStore):
+class Xiaomi(AppStore):
     pass
 
 class Mobile365(AppStore):
